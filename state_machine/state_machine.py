@@ -7,31 +7,26 @@ class StateMachine:
         self.ends = set(ends)
         self.errors = set(errors)
         self.is_done = is_done
-    
     def consume(self, value):
         state = self.start
         while not state in self.errors and not self.is_done(value):
             value, state = state(value)
         return state in self.ends
-    
-def state1(value): 
+        
+def state1(value):
     if value[0].islower():
         return value[1:], state2
     return value, error
-
 def state2(value):
     if value[0].isupper():
         return value[1:], state3
     return value, error
-
 def state3(value):
     if value[0].isnumeric():
         return value[1:], state1
     return value, error
-
 def error(value):
     return value, error
-
 def is_done(value):
     return value == ""
 
@@ -39,7 +34,7 @@ state_machine = StateMachine(
     start=state1,
     ends=[state1],
     errors=[error],
-    is_done=is_done,
+    is_done=is_done
 )
 
 class TestSM(unittest.TestCase):
