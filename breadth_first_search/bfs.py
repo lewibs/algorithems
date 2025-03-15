@@ -1,38 +1,35 @@
 import unittest
 
+# reps 5
+
 class Node:
-    def __init__(self, data):
+    def __init__(self, data, neighbors):
         self.data = data
-        self.neighbors = []
+        self.neighbors = neighbors
 
-def make_graph(node_neighbor_pairs):
-    graph = {}
-    for node, _ in node_neighbor_pairs:
-        graph[node] = Node(node)
-    
-    for node, neighbors in node_neighbor_pairs:
-        for n in neighbors:
-            graph[node].neighbors.append(graph[n])
-
-    return graph
+def make_graph(pairs):
+    g = {}
+    for k, n in pairs:
+        g[k] = Node(k, n)
+    return g
 
 def bfs(start, target, graph):
-    e = {}
-    q = [(graph[start], 0)]
+    explored = {}
+    queue = [(start, 0)]
 
-    while len(q):
-        n, dist = q.pop(0)
+    while queue:
+        key, depth = queue.pop()
+        if key == target:
+            return depth
 
-        if n.data == target:
-            return dist
+        explored[key] = True
+        nodes = graph[key].neighbors
 
-        e[n] = True
-        for n in n.neighbors:
-            if n not in e:
-                q.append((n, dist+1))
-
+        for node in nodes:
+            if node not in explored:
+                queue.append((node, depth+1))
+        
     return -1
-
 
 class TestBFS(unittest.TestCase):
     def setUp(self):
