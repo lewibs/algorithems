@@ -1,5 +1,6 @@
 import unittest
 
+# reps - 4
 # convert numbers like 013, 123, 85647 to ints
 def str_to_int(s):
     number = 0
