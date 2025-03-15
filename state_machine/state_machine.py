@@ -1,40 +1,48 @@
 import unittest
 
+# reps 6
 # this is a state machine that takes char, CHAR, num ...
+
 class StateMachine:
-    def __init__(self, start, ends, errors, is_done):
+    def __init__(self, start, ends, error, done):
         self.start = start
         self.ends = set(ends)
-        self.errors = set(errors)
-        self.is_done = is_done
+        self.error = error
+        self.done = done
+    
     def consume(self, value):
         state = self.start
-        while not state in self.errors and not self.is_done(value):
-            value, state = state(value)
-        return state in self.ends
-        
+        while state != self.error and not self.done(value):
+            value, state = state(value)        
+        return state in self.ends and state != self.error
+
+    
 def state1(value):
     if value[0].islower():
         return value[1:], state2
     return value, error
+
 def state2(value):
     if value[0].isupper():
         return value[1:], state3
     return value, error
+
 def state3(value):
-    if value[0].isnumeric():
+    if value[0].isdigit():
         return value[1:], state1
     return value, error
+
 def error(value):
     return value, error
-def is_done(value):
+
+def done(value):
     return value == ""
 
 state_machine = StateMachine(
     start=state1,
     ends=[state1],
-    errors=[error],
-    is_done=is_done
+    error=error,
+    done=done
 )
 
 class TestSM(unittest.TestCase):
