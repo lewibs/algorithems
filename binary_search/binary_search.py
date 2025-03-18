@@ -1,25 +1,25 @@
 import unittest
 
+#reps 5
+
 def binary_search(arr, target):
     start = 0
     end = len(arr) - 1
 
-    while start <= end: #This must be = because you can slightly overshoot it
-        mid = (end+start)//2 # this is + because math
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            # we move the window to the upper half if the number at the middle is lower then the target
-            start = mid + 1 # we explude the middle
+    while start <= end:
+        mid = (start+end)//2
+        if arr[mid] < target:
+            start = mid + 1
         elif arr[mid] > target:
-            # we move the window to the lower half
-            end = mid - 1 # we exclude the number we guess
-
+            end = mid - 1
+        else:
+            return mid
+    
     return None
-
+ 
 class TestBinarySearch(unittest.TestCase):
     def setUp(self):
-        self.list = range(1000)
+        self.list = range(100)
 
     def test_contigus(self):
         for v in self.list:

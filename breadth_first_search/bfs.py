@@ -18,7 +18,7 @@ def bfs(start, target, graph):
     queue = [(start, 0)]
 
     while queue:
-        key, depth = queue.pop()
+        key, depth = queue.pop(0)
         if key == target:
             return depth
 
