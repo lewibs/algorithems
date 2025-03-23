@@ -11,6 +11,15 @@ def stack_squeze(arr):
 
     return res
 
+def stack_uhh(arr):
+    stack = []
+    for i in sorted(arr, reverse=True):
+        stack.append(i)
+        if len(stack) >= 2 and stack[-1] == stack[-2]:
+            stack.pop()
+            stack.append(stack[-1])
+    return stack
+
 class TestStackSqueze(unittest.TestCase):
     def test_empty_input(self):
         # Test with an empty list
@@ -22,4 +31,4 @@ class TestStackSqueze(unittest.TestCase):
 
     def test_multiple_elements(self):
         # Test with multiple elements in the list
-        self.assertEqual(stack_squeze([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]), [3, 3, 4, 4, 5, 9, 9, 9, 9, 9, 9])
+        self.assertEqual(stack_uhh([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]), [3, 3, 4, 4, 5, 9, 9, 9, 9, 9, 9])
