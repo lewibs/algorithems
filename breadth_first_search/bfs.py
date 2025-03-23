@@ -14,22 +14,20 @@ def make_graph(pairs):
     return g
 
 def bfs(start, target, graph):
-    explored = {}
-    queue = [(start, 0)]
+    explored = {start: True}  # Mark start as explored immediately
+    queue = [(start, 0)]  # (node, depth)
 
     while queue:
         key, depth = queue.pop(0)
         if key == target:
             return depth
 
-        explored[key] = True
-        nodes = graph[key].neighbors
-
-        for node in nodes:
+        for node in graph[key].neighbors:
             if node not in explored:
-                queue.append((node, depth+1))
-        
-    return -1
+                queue.append((node, depth + 1))
+                explored[node] = True  # Mark as explored immediately when enqueuing
+
+    return -1  # Return -1 if target is not reachable
 
 class TestBFS(unittest.TestCase):
     def setUp(self):

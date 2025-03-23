@@ -16,6 +16,7 @@ def make_graph(paris):
 def dfs(start, target, graph):
     stack = [(start, 0)]
     explored = {}
+    explored[start] = True
 
     while stack:
         key, depth = stack.pop()
@@ -24,6 +25,7 @@ def dfs(start, target, graph):
         node = graph[key]
         for n in node.neighbors:
             if n not in explored:
+                explored[n] = True
                 stack.append((n, depth + 1))
 
     return -1
